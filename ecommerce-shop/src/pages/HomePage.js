@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Grid, Card, CardContent, CardMedia, Typography, Button, Box, TextField } from "@mui/material";
+import { Grid, Card, CardContent, CardMedia, Typography, Button, Box, TextField, IconButton } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useCart } from "../context/CartContext";
 import apple13 from '../images/ap13.jpg';
@@ -12,6 +12,7 @@ import samsung from '../images/sam.jpg';
 import laptop from '../images/lap.jpg';
 import canon from '../images/canon.jpg';
 import headphones from '../images/sonhead.jpg';
+import { Favorite } from "@mui/icons-material"; // Make sure this is correctly imported
 
 const HomePage = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -148,26 +149,37 @@ const HomePage = () => {
                 <Typography variant="body1" color="primary" sx={{ fontWeight: "bold", marginBottom: "10px" }}>
                   Rs.{product.price}
                 </Typography>
-                <Box display="flex" justifyContent="space-between">
-                  <Button
-                    variant="outlined"
-                    color="secondary"
-                    size="small"
-                    sx={{ textTransform: "none", fontSize: "0.875rem" }}
-                    onClick={() => handleViewDetails(product)} // Pass product to view details
-                  >
-                    View Details
-                  </Button>
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    size="small"
-                    sx={{ textTransform: "none", fontSize: "0.875rem" }}
-                    onClick={() => handleAddToCart(product)} // Add to cart
-                  >
-                    Add to Cart
-                  </Button>
-                </Box>
+                <Box display="flex" justifyContent="space-between" alignItems="center">
+  {/* View Details on the left */}
+  <Button
+    variant="outlined"
+    color="secondary"
+    size="small"
+    sx={{ textTransform: "none", fontSize: "0.875rem" }}
+    onClick={() => handleViewDetails(product)} // Pass product to view details
+  >
+    View Details
+  </Button>
+
+  {/* Wishlist button (heart icon) and Add to Cart on the right */}
+  <Box display="flex" alignItems="center" gap={1}>
+    {/* Wishlist button */}
+    <IconButton color="secondary">
+      <Favorite sx={{ fontSize: 30 }} />
+    </IconButton>
+
+    {/* Add to Cart button */}
+    <Button
+      variant="contained"
+      color="primary"
+      size="small"
+      sx={{ textTransform: "none", fontSize: "0.875rem" }}
+      onClick={() => handleAddToCart(product)} // Add to cart
+    >
+      Add to Cart
+    </Button>
+  </Box>
+</Box>
               </CardContent>
             </Card>
           </Grid>

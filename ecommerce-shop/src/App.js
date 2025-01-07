@@ -4,31 +4,69 @@ import Navbar from "./components/Navbar";
 import HomePage from "./pages/HomePage";
 import ProductDetailsPage from "./pages/ProductDetailsPage";
 import CartPage from "./pages/CartPage";
+import LoginPage from "./pages/LoginPage";
+import MyProfilePage from "./pages/MyProfile";
 import { CartProvider } from "./context/CartContext";
+import { AuthProvider } from "./context/AuthContext";
+import PrivateRoute from "./components/PrivateRoute";
 
-// Layout Component
 const Layout = ({ children }) => {
   return (
     <div>
-      <Navbar /> {/* Navbar */}
-      <div style={{ paddingTop: "80px" }}>{children}</div> {/* Content with padding */}
+      <Navbar />
+      <div style={{ paddingTop: "80px" }}>{children}</div>
     </div>
   );
 };
 
 const App = () => {
   return (
-    <CartProvider>
-    <Router>
-      <Layout> {/* Wrap Routes inside Layout to ensure padding */}
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/product/:productId" element={<ProductDetailsPage />} />
-          <Route path="/cart" element={<CartPage />} /> {/* Cart Page Route */}
-        </Routes>
-      </Layout>
-      </Router>
+    <AuthProvider>
+      <CartProvider>
+        <Router>
+          <Layout>
+            <Routes>
+              {/* Public Route */}
+              <Route path="/login" element={<LoginPage />} />
+
+              {/* Protected Routes */}
+              <Route
+                path="/home"
+                element={
+                  <PrivateRoute>
+                    <HomePage />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/product/:productId"
+                element={
+                  <PrivateRoute>
+                    <ProductDetailsPage />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/cart"
+                element={
+                  <PrivateRoute>
+                    <CartPage />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/myprofile"
+                element={
+                  <PrivateRoute>
+                    <MyProfilePage />
+                  </PrivateRoute>
+                }
+              />
+            </Routes>
+          </Layout>
+        </Router>
       </CartProvider>
+    </AuthProvider>
   );
 };
 

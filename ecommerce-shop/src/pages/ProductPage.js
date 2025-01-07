@@ -1,5 +1,6 @@
 import React from "react";
-import { Grid, Typography, Button, TextField } from "@mui/material";
+import { Grid, Typography, Button, TextField, IconButton } from "@mui/material";
+import { Favorite } from "@mui/icons-material"; // Make sure this is correctly imported
 
 const ProductPage = () => {
   const product = {
@@ -24,6 +25,7 @@ const ProductPage = () => {
           <Typography variant="body1" sx={{ marginBottom: "20px" }}>
             {product.description}
           </Typography>
+          
           <TextField
             label="Quantity"
             type="number"
@@ -31,6 +33,12 @@ const ProductPage = () => {
             InputProps={{ inputProps: { min: 1 } }}
             sx={{ width: "80px", marginRight: "10px" }}
           />
+
+          {/* Wishlist button (heart icon) */}
+          <IconButton color="secondary" sx={{ marginRight: "10px" }}>
+            <Favorite sx={{ fontSize: 30 }} /> {/* Explicit size added here */}
+          </IconButton>
+
           <Button variant="contained" color="primary" size="large">
             Add to Cart
           </Button>
